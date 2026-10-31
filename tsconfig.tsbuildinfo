@@ -1,0 +1,1 @@
+{"root":["./src/main.tsx","./src/router.tsx","./src/trpc.ts","./src/components/flightmap.tsx","./src/lib/map.ts","./src/lib/types.ts","./server/academy.ts","./server/db.ts","./server/heliports.ts","./server/index.ts","./server/traffic.ts","./server/trpc.ts","./server/weather.ts","./vite.config.ts"],"version":"5.9.3"}
