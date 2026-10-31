@@ -38,6 +38,7 @@ database.exec(`
     score INTEGER NOT NULL DEFAULT 0,
     total INTEGER NOT NULL,
     passed_at TEXT,
+    answers_json TEXT NOT NULL DEFAULT '{}',
     updated_at TEXT NOT NULL
   );
   CREATE TABLE IF NOT EXISTS flight_approval_requests (
@@ -51,5 +52,10 @@ database.exec(`
   CREATE INDEX IF NOT EXISTS drones_user_id ON drones(user_id);
   CREATE INDEX IF NOT EXISTS flight_approval_requests_user_id ON flight_approval_requests(user_id, submitted_at DESC);
 `);
+
+const academyColumns = database.prepare("PRAGMA table_info(academy_progress)").all() as Array<{ name: string }>;
+if (!academyColumns.some((column) => column.name === "answers_json")) {
+  database.exec("ALTER TABLE academy_progress ADD COLUMN answers_json TEXT NOT NULL DEFAULT '{}'");
+}
 
 export default database;

@@ -204,16 +204,39 @@ const dronesRouter = t.router({
 
 const academyRouter = t.router({
   get: protectedProcedure.query(({ ctx }) => {
-    const progress = database.prepare("SELECT score, total, passed_at FROM academy_progress WHERE user_id = ?")
-      .get(ctx.user.id) as { score: number; total: number; passed_at: string | null } | undefined;
+    const progress = database.prepare("SELECT score, total, passed_at, answers_json FROM academy_progress WHERE user_id = ?")
+      .get(ctx.user.id) as { score: number; total: number; passed_at: string | null; answers_json: string } | undefined;
     return {
       questions: academyQuestions.map(({ answer: _answer, ...question }) => question),
       passingScore,
       passed: Boolean(progress?.passed_at),
       score: progress?.score ?? null,
       total: progress?.total ?? academyQuestions.length,
-      passedAt: progress?.passed_at ?? null
+      passedAt: progress?.passed_at ?? null,
+      answers: progress ? JSON.parse(progress.answers_json) as Record<string, string> : {}
     };
+  }),
+  saveAnswer: protectedProcedure.input(z.object({
+    questionId: z.string().min(1).max(20),
+    optionId: z.string().min(1).max(20)
+  })).mutation(({ input, ctx }) => {
+    const question = academyQuestions.find((item) => item.id === input.questionId);
+    if (!question || !question.options.some((option) => option.id === input.optionId)) {
+      throw new TRPCError({ code: "BAD_REQUEST", message: "Răspunsul selectat nu este valid." });
+    }
+    const existing = database.prepare("SELECT passed_at FROM academy_progress WHERE user_id = ?")
+      .get(ctx.user.id) as { passed_at: string | null } | undefined;
+    if (existing?.passed_at) return { saved: true, locked: true };
+
+    const now = new Date().toISOString();
+    database.prepare(`
+      INSERT INTO academy_progress (user_id, score, total, passed_at, answers_json, updated_at)
+      VALUES (?, 0, ?, NULL, json_object(?, ?), ?)
+      ON CONFLICT(user_id) DO UPDATE SET
+        answers_json = json_set(academy_progress.answers_json, ?, ?),
+        updated_at = excluded.updated_at
+    `).run(ctx.user.id, academyQuestions.length, input.questionId, input.optionId, now, `$.${input.questionId}`, input.optionId);
+    return { saved: true, locked: false };
   }),
   submit: protectedProcedure.input(z.object({
     answers: z.array(z.object({
@@ -241,14 +264,15 @@ const academyRouter = t.router({
     const passed = score >= passingScore;
     const now = new Date().toISOString();
     database.prepare(`
-      INSERT INTO academy_progress (user_id, score, total, passed_at, updated_at)
-      VALUES (?, ?, ?, ?, ?)
+      INSERT INTO academy_progress (user_id, score, total, passed_at, answers_json, updated_at)
+      VALUES (?, ?, ?, ?, ?, ?)
       ON CONFLICT(user_id) DO UPDATE SET
         score = excluded.score,
         total = excluded.total,
         passed_at = excluded.passed_at,
+        answers_json = excluded.answers_json,
         updated_at = excluded.updated_at
-    `).run(ctx.user.id, score, academyQuestions.length, passed ? now : null, now);
+    `).run(ctx.user.id, score, academyQuestions.length, passed ? now : null, JSON.stringify(Object.fromEntries(answers)), now);
     return { passed, score, total: academyQuestions.length, passingScore, alreadyPassed: false };
   })
 });
@@ -304,6 +328,9 @@ const flightRequestsRouter = t.router({
         date: string;
         time: string;
         droneModel: string;
+        requestType?: "flight" | "photo";
+        location?: string;
+        purpose?: string;
         area: { west: number; east: number; south: number; north: number };
       },
       submittedAt: row.submitted_at
@@ -318,7 +345,11 @@ const flightRequestsRouter = t.router({
     }).refine((area) => area.west < area.east && area.south < area.north, "Zona invalidă."),
     date: z.string().regex(/^\d{4}-\d{2}-\d{2}$/),
     time: z.string().regex(/^([01]\d|2[0-3]):[0-5]\d$/),
-    droneId: z.string().uuid()
+    droneId: z.string().uuid(),
+    requestType: z.enum(["flight", "photo"]).default("flight"),
+    location: z.string().trim().max(160).default(""),
+    purpose: z.string().trim().max(500).default(""),
+    notes: z.string().trim().max(1000).default("")
   })).mutation(({ input, ctx }) => {
     const drone = database.prepare("SELECT model, manufacturer FROM drones WHERE id = ? AND user_id = ?")
       .get(input.droneId, ctx.user.id) as { model: string; manufacturer: string } | undefined;
@@ -327,10 +358,14 @@ const flightRequestsRouter = t.router({
     const id = randomUUID();
     const submittedAt = new Date().toISOString();
     const request = {
+      requestType: input.requestType,
       date: input.date,
       time: input.time,
       droneModel: [drone.manufacturer, drone.model].filter(Boolean).join(" "),
-      area: input.area
+      area: input.area,
+      location: input.location,
+      purpose: input.purpose,
+      notes: input.notes
     };
     database.prepare(`
       INSERT INTO flight_approval_requests (id, user_id, status, request_json, submitted_at)

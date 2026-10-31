@@ -71,7 +71,7 @@ function LoginPage() {
           <div className="auth-security">Cont real, cu sesiune securizată. Parola este protejată prin hash cu salt și nu este păstrată în browser.</div>
         </section>
       </div>
-      <footer className="auth-footer"><span>© 2026 aripi · Zboară informat, zboară responsabil.</span><span>OpenStreetMap · ROMATSA</span></footer>
+      <footer className="auth-footer"><span>© 2026 aripi · Demo de planificare drone.</span><span>OpenStreetMap · date demonstrative</span></footer>
     </main>
   );
 }
@@ -127,7 +127,7 @@ function ProtectedLayout() {
       <main className="main-content">
         {logout.error && <div className="notice-banner" role="alert"><span>!</span><p>Nu am putut încheia sesiunea: {logout.error.message}</p></div>}
         <Outlet />
-        <footer className="footer"><span>© 2026 aripi</span><span>Verifică NOTAM-urile și sursele oficiale înainte de zbor.</span></footer>
+        <footer className="footer"><span>© 2026 aripi</span><span>Planificare demonstrativă · cererile se înregistrează doar în Aripi.</span></footer>
       </main>
     </div>
   );
@@ -194,7 +194,7 @@ function HomePage() {
         <button className="button button-outline" onClick={() => navigate({ to: academy.data?.passed ? "/planner" : "/academy" })}><span aria-hidden="true">{academy.data?.passed ? "⌖" : "✦"}</span> {academy.data?.passed ? "Deschide harta" : "Promovează academia"}</button>
       </section>
       <section className="hero-panel">
-        <div className="hero-copy"><span className="hero-badge"><span aria-hidden="true">✦</span> {academy.data?.passed ? "GATA DE PLANIFICARE" : "ACADEMIA ÎNAINTE DE ZBOR"}</span><h2>{academy.data?.passed ? <>Un plan clar.<br /><span>Un zbor mai bun.</span></> : <>Învață întâi.<br /><span>Zboară responsabil.</span></>}</h2><p>{academy.data?.passed ? "Adaugă drona, trasează zona și verifică informațiile aeronautice disponibile înainte de decolare." : "Parcurge Academia și promovează testul înainte să poți accesa planificarea zborului."}</p><div className="hero-actions"><button className="button button-light" onClick={() => navigate({ to: academy.data?.passed ? (drones.length ? "/planner" : "/drones") : "/academy" })}>{academy.data?.passed ? (drones.length ? "Planifică zborul" : "Adaugă prima dronă") : "Începe academia"} <span>→</span></button><button className="button button-glass" onClick={() => navigate({ to: "/academy" })}>{academy.data?.passed ? "Recapitulează" : "Vezi pașii"} <span>↗</span></button></div><div className="hero-footnote"><span>●</span>{academy.data?.passed ? "Date ROMATSA orientative · confirmă prin sursele oficiale" : "Planificarea rămâne blocată până promovezi testul"}</div></div>
+        <div className="hero-copy"><span className="hero-badge"><span aria-hidden="true">✦</span> {academy.data?.passed ? "GATA DE PLANIFICARE" : "ACADEMIA ÎNAINTE DE ZBOR"}</span><h2>{academy.data?.passed ? <>Un plan clar.<br /><span>Un zbor mai bun.</span></> : <>Învață întâi.<br /><span>Zboară responsabil.</span></>}</h2><p>{academy.data?.passed ? "Adaugă drona, trasează zona și verifică informațiile aeronautice disponibile înainte de decolare." : "Parcurge Academia și promovează testul înainte să poți accesa planificarea zborului."}</p><div className="hero-actions"><button className="button button-light" onClick={() => navigate({ to: academy.data?.passed ? (drones.length ? "/planner" : "/drones") : "/academy" })}>{academy.data?.passed ? (drones.length ? "Planifică zborul" : "Adaugă prima dronă") : "Începe academia"} <span>→</span></button><button className="button button-glass" onClick={() => navigate({ to: "/academy" })}>{academy.data?.passed ? "Recapitulează" : "Vezi pașii"} <span>↗</span></button></div><div className="hero-footnote"><span>●</span>{academy.data?.passed ? "Date de hartă demonstrative · cererile se gestionează în Aripi" : "Planificarea rămâne blocată până promovezi testul"}</div></div>
         <div className="hero-illustration" aria-hidden="true"><div className="hero-orbit orbit-one" /><div className="hero-orbit orbit-two" /><div className="hero-drone">✣</div><span className="hero-coordinate">45° 56′ N<br />24° 58′ E</span><span className="hero-spark spark-one">✦</span><span className="hero-spark spark-two">✦</span></div>
       </section>
       <div className="dashboard-grid">
@@ -203,14 +203,14 @@ function HomePage() {
           {isLoading ? <p className="muted">Se încarcă flota…</p> : drones.length ? <div className="home-drone-list">{drones.slice(0, 3).map((drone) => <DroneSummary key={drone.id} drone={drone} />)}</div> : <div className="empty-state"><span className="empty-icon">⌁</span><strong>Flota ta începe aici</strong><p>Adaugă dronele și detaliile camerelor lor.</p><Link to="/drones" className="text-link">Adaugă prima dronă →</Link></div>}
         </section>
         <section className="surface-card dashboard-map">
-          <span className="section-eyebrow">PLANIFICARE</span><div className="map-card-icon">⌖</div><h2>{academy.data?.passed ? "Unde vrei să zbori?" : "Deblochează harta"}</h2><p>{academy.data?.passed ? "Găsește-te pe hartă, desenează o zonă și consultă stratul public ROMATSA." : "Promovează Academia Aripi înainte să poți planifica un zbor."}</p><button className="button button-outline button-wide" onClick={() => navigate({ to: academy.data?.passed ? (drones.length ? "/planner" : "/drones") : "/academy" })}>{academy.data?.passed ? "Deschide harta" : "Mergi la academie"} <span>→</span></button>
+          <span className="section-eyebrow">PLANIFICARE</span><div className="map-card-icon">⌖</div><h2>{academy.data?.passed ? "Unde vrei să zbori?" : "Deblochează harta"}</h2><p>{academy.data?.passed ? "Desenează o zonă și verifică straturile demonstrative Aripi." : "Promovează Academia Aripi înainte să poți planifica un zbor."}</p><button className="button button-outline button-wide" onClick={() => navigate({ to: academy.data?.passed ? (drones.length ? "/planner" : "/drones") : "/academy" })}>{academy.data?.passed ? "Deschide harta" : "Mergi la academie"} <span>→</span></button>
         </section>
         <section className="surface-card dashboard-learn">
           <div className="section-heading"><div><span className="section-eyebrow">ÎNCEPUT RAPID</span><h2>Primii pași</h2></div><Link to="/academy" className="text-link">Deschide Academia <span>→</span></Link></div>
-          <div className="quick-steps"><Link to="/drones"><span>01</span><strong>Configurează drona</strong><b>→</b></Link><Link to={academy.data?.passed ? "/planner" : "/academy"}><span>02</span><strong>{academy.data?.passed ? "Alege zona de zbor" : "Promovează Academia"}</strong><b>→</b></Link><Link to={academy.data?.passed ? "/aerofoto" : "/academy"}><span>03</span><strong>Pregătește un draft</strong><b>→</b></Link></div>
+          <div className="quick-steps"><Link to="/drones"><span>01</span><strong>Configurează drona</strong><b>→</b></Link><Link to={academy.data?.passed ? "/planner" : "/academy"}><span>02</span><strong>{academy.data?.passed ? "Alege zona de zbor" : "Promovează Academia"}</strong><b>→</b></Link><Link to={academy.data?.passed ? "/aerofoto" : "/academy"}><span>03</span><strong>Trimite cerere demo</strong><b>→</b></Link></div>
         </section>
       </div>
-      <div className="notice-banner"><span>ⓘ</span><p>Aripi verifică orientativ zonele și traficul disponibil. Statusurile de aprobare din demo sunt simulate; nu sunt autorizații reale și nu includ NOTAM-uri curente.</p></div>
+      <div className="notice-banner"><span>ⓘ</span><p>Demo Aripi: planificarea, cererile și statusurile se gestionează în aplicație. Nicio cerere nu este transmisă către platforme externe; straturile de hartă sunt demonstrative.</p></div>
     </div>
   );
 }
@@ -220,12 +220,16 @@ function AcademyPage() {
   const utils = trpc.useUtils();
   const [answers, setAnswers] = useState<Record<string, string>>({});
   const [result, setResult] = useState<{ passed: boolean; score: number; total: number; passingScore: number } | null>(null);
+  const saveAnswer = trpc.academy.saveAnswer.useMutation();
   const submit = trpc.academy.submit.useMutation({
     onSuccess: async (submission) => {
       setResult(submission);
       await utils.academy.get.invalidate();
     }
   });
+  useEffect(() => {
+    if (academy) setAnswers(academy.answers);
+  }, [academy?.answers]);
   if (isLoading) return <div className="loading-card">Se încarcă Academia…</div>;
   if (error || !academy) return <div className="notice-banner" role="alert">Nu am putut încărca Academia: {error?.message || "Date indisponibile."}</div>;
   const completed = Object.keys(answers).length === academy.questions.length;
@@ -239,15 +243,15 @@ function AcademyPage() {
   };
   return (
     <div className="page-content">
-      <section className="page-intro"><span className="eyebrow">ÎNVĂȚARE ȘI SIGURANȚĂ</span><h1>Academia Aripi</h1><p>Învață verificările de bază și promovează testul pentru a debloca planificarea zborului.</p></section>
+      <section className="page-intro"><span className="eyebrow">ÎNVĂȚARE ȘI SIGURANȚĂ</span><h1>Academia Aripi</h1><p>Progresul și răspunsurile se salvează automat în contul tău. Poți continua de unde ai rămas.</p></section>
       <section className={`academy-status ${academy.passed ? "academy-status-passed" : ""}`}>
         <span className="academy-status-icon">{academy.passed ? "✓" : "✦"}</span>
-        <div><strong>{academy.passed ? "Academie promovată" : "Planificarea zborului este blocată"}</strong><p>{academy.passed ? `Ai obținut ${academy.score}/${academy.total}. Poți accesa plannerul; verifică în continuare sursele oficiale înainte de orice zbor.` : `Răspunde corect la cel puțin ${academy.passingScore} din ${academy.total} întrebări pentru a debloca plannerul.`}</p></div>
+        <div><strong>{academy.passed ? "Academie promovată" : "Planificarea zborului este blocată"}</strong><p>{academy.passed ? `Ai obținut ${academy.score}/${academy.total}. Progresul și rezultatul tău sunt păstrate în cont.` : `Răspunde corect la cel puțin ${academy.passingScore} din ${academy.total} întrebări pentru a debloca plannerul.`}</p></div>
         {academy.passed && <Link className="button button-primary" to="/planner">Deschide harta →</Link>}
       </section>
-      <section className="learn-hero"><span className="hero-badge"><span aria-hidden="true">✦</span> ÎNAINTE DE DECOLARE</span><h2>Siguranța începe cu verificări simple.</h2><p>Confirmă condițiile și restricțiile folosind sursele oficiale actuale. Un rezultat din Aripi nu este o autorizație de zbor și nu înlocuiește instruirea oficială.</p></section>
+      <section className="learn-hero"><span className="hero-badge"><span aria-hidden="true">✦</span> ÎNAINTE DE DECOLARE</span><h2>Siguranța începe cu verificări simple.</h2><p>Învață cum să evaluezi zona, vremea, echipamentul și situațiile de urgență. Academia Aripi este un modul demonstrativ de instruire.</p></section>
       <div className="academy-topics">
-        <article className="surface-card academy-topic"><span>01</span><strong>Verifică zona</strong><p>Consultă restricțiile și NOTAM-urile actuale înainte să alegi aria de operare.</p></article>
+        <article className="surface-card academy-topic"><span>01</span><strong>Verifică zona</strong><p>Analizează suprapunerile și atenționările pe care stratul demonstrativ Aripi le afișează pentru aria aleasă.</p></article>
         <article className="surface-card academy-topic"><span>02</span><strong>Verifică drona și vremea</strong><p>Respectă limitele producătorului și amână zborul când condițiile nu sunt sigure.</p></article>
         <article className="surface-card academy-topic"><span>03</span><strong>Protejează oamenii</strong><p>Păstrează controlul, evaluează riscurile și nu interfera cu intervențiile de urgență.</p></article>
       </div>
@@ -259,19 +263,21 @@ function AcademyPage() {
               <legend><span>{String(index + 1).padStart(2, "0")}</span>{question.question}</legend>
               <div className="academy-options">{question.options.map((option) => (
                 <label key={option.id} className={answers[question.id] === option.id ? "academy-option option-selected" : "academy-option"}>
-                  <input type="radio" name={question.id} value={option.id} checked={answers[question.id] === option.id} onChange={() => { setAnswers((current) => ({ ...current, [question.id]: option.id })); setResult(null); }} />
+                  <input type="radio" name={question.id} value={option.id} checked={answers[question.id] === option.id} disabled={academy.passed} onChange={() => { setAnswers((current) => ({ ...current, [question.id]: option.id })); setResult(null); saveAnswer.mutate({ questionId: question.id, optionId: option.id }); }} />
                   <span>{option.text}</span>
                 </label>
               ))}</div>
             </fieldset>
           ))}
         </div>
+        {saveAnswer.error && <p className="form-error" role="alert">Nu am putut salva progresul în cont: {saveAnswer.error.message}</p>}
         {submit.error && <p className="form-error" role="alert">Nu am putut înregistra testul: {submit.error.message}</p>}
-        {displayedResult && <div className={displayedResult.passed ? "exam-result exam-result-passed" : "exam-result exam-result-failed"} role="status"><strong>{displayedResult.passed ? "Ai promovat Academia." : "Test nepromovat încă."}</strong><span>Scor: {displayedResult.score}/{displayedResult.total} · prag: {displayedResult.passingScore}/{displayedResult.total}</span>{!displayedResult.passed && <button className="button button-quiet" type="button" onClick={() => { setAnswers({}); setResult(null); }}>Reia testul</button>}</div>}
-        {!academy.passed && <button className="button button-primary academy-submit" type="submit" disabled={!completed || submit.isPending}>{submit.isPending ? "Se verifică răspunsurile…" : "Trimite testul"} <span>→</span></button>}
-        <p className="academy-disclaimer">Acest test este un ghid introductiv creat pentru aplicație, nu un examen oficial, o calificare de pilot sau o autorizare de zbor.</p>
+        {!academy.passed && <p className="academy-save-status" role="status">{saveAnswer.isPending ? "Se salvează progresul…" : completed ? "Toate răspunsurile sunt salvate în cont." : `${Object.keys(answers).length} din ${academy.questions.length} răspunsuri salvate.`}</p>}
+        {displayedResult && <div className={displayedResult.passed ? "exam-result exam-result-passed" : "exam-result exam-result-failed"} role="status"><strong>{displayedResult.passed ? "Ai promovat Academia." : "Test nepromovat încă."}</strong><span>Scor: {displayedResult.score}/{displayedResult.total} · prag: {displayedResult.passingScore}/{displayedResult.total}</span>{!displayedResult.passed && <small>Poți modifica răspunsurile de mai sus și trimite din nou testul.</small>}</div>}
+        {!academy.passed && <button className="button button-primary academy-submit" type="submit" disabled={!completed || submit.isPending || saveAnswer.isPending}>{submit.isPending ? "Se verifică răspunsurile…" : "Trimite testul"} <span>→</span></button>}
+        <p className="academy-disclaimer">Academie demonstrativă. Răspunsurile și rezultatul se păstrează în contul tău Aripi.</p>
       </form>
-      <div className="notice-banner"><span>ⓘ</span><p>Accesul la planner se deblochează numai după promovarea testului. Chiar și după promovare, verifică NOTAM-urile, restricțiile și aprobările necesare prin canalele oficiale.</p></div>
+      <div className="notice-banner"><span>ⓘ</span><p>Promovarea Academiei păstrează progresul în Aripi și deblochează plannerul demonstrativ.</p></div>
     </div>
   );
 }
@@ -378,7 +384,7 @@ function DronesPage() {
         {deleteError && <p className="form-error" role="alert">{deleteError}</p>}
         {isLoading ? <div className="loading-card">Se încarcă flota ta…</div> : filtered.length ? <div className="fleet-grid">{filtered.map((drone) => <DroneCard key={drone.id} drone={drone} onEdit={() => { setEditing(drone); setShowForm(true); window.scrollTo({ top: 0, behavior: "smooth" }); }} onDelete={() => { if (window.confirm(`Ștergi ${drone.model} din flota ta?`)) remove.mutate({ id: drone.id }); }} />)}</div> : <div className="empty-state fleet-empty"><span className="empty-icon">⌁</span><strong>{category === "all" ? "Flota ta este încă goală" : "Nu ai drone în categoria aceasta"}</strong><p>{category === "all" ? "Începe prin a adăuga modelul primei drone." : "Poți adăuga o dronă în această categorie oricând."}</p>{category === "all" && <button className="button button-primary" onClick={startAdd}>＋ Adaugă prima dronă</button>}</div>}
       </section>
-      <div className="notice-banner"><span>ⓘ</span><p>Detaliile sunt pentru organizarea ta. Confirmă încadrarea și datele oficiale în <a href="https://uas.caa.ro/" target="_blank" rel="noreferrer">portalul UAS CAA ↗</a>.</p></div>
+      <div className="notice-banner"><span>ⓘ</span><p>Datele dronelor tale se păstrează în contul Aripi și sunt folosite în planurile și cererile demonstrative din aplicație.</p></div>
     </div>
   );
 }
@@ -492,11 +498,11 @@ function PlannerPage() {
     setCheckedItems([]);
   }, [plan.date, plan.time, plan.droneId, plan.area?.west, plan.area?.east, plan.area?.south, plan.area?.north]);
   const checklistItems = [
-    { id: "official", label: "Am verificat NOTAM-urile, restricțiile și condițiile oficiale pentru zonă." },
+    { id: "official", label: "Am analizat zonele și atenționările afișate de harta demonstrativă Aripi." },
     { id: "aircraft", label: "Am verificat drona, bateria, elicele, failsafe-ul și locul de aterizare." },
     { id: "people", label: "Am evaluat persoanele, proprietățile, intimitatea și păstrez controlul/contactul vizual." },
-    ...(selection?.ctr.length ? [{ id: "atc", label: "În CTR: am contactat direct unitatea ATC și am confirmarea necesară pentru acest zbor." }] : []),
-    ...(selection?.mapn.length ? [{ id: "mapn", label: "Am verificat cerințele AEROFOTO și am avizul necesar înainte de activitatea foto." }] : [])
+    ...(selection?.ctr.length ? [{ id: "atc", label: "Am citit atenționarea CTR: traficul se poate schimba și poate fi necesară eliberarea zonei." }] : []),
+    ...(selection?.mapn.length ? [{ id: "mapn", label: "Am verificat atenționarea pentru activitate foto afișată de Aripi." }] : [])
   ];
   const checklistComplete = checklistItems.every((item) => checkedItems.includes(item.id));
   const weatherAllowsPlanning = Boolean(weather.data?.recommendFlight);
@@ -511,7 +517,7 @@ function PlannerPage() {
   if (!drones.length) return <div className="page-content"><div className="empty-state"><span className="empty-icon">⌖</span><strong>Adaugă întâi cel puțin o dronă</strong><p>Selectează drona folosită pentru a începe planificarea.</p><Link className="button button-primary" to="/drones">Deschide Dronele mele →</Link></div></div>;
   return (
     <div className="page-content">
-      <section className="page-intro planner-intro"><div><span className="eyebrow">PLANIFICAREA ZBORULUI</span><h1>Alege locul pe hartă</h1><p>Găsește locația ta sau mută harta, apoi desenează dreptunghiul zonei de zbor.</p></div><span className="source-tag"><i /> Date ROMATSA {zones?.timeStamp?.slice(0, 10) || ""}</span></section>
+      <section className="page-intro planner-intro"><div><span className="eyebrow">PLANIFICAREA ZBORULUI · DEMO</span><h1>Alege locul pe hartă</h1><p>Găsește locația ta sau mută harta, desenează zona și verifică straturile demonstrative Aripi.</p></div><span className="source-tag"><i /> Strat Aripi · {zones?.timeStamp?.slice(0, 10) || "se încarcă"}</span></section>
       <div className="planner-layout">
         <FlightMap zones={zones} loading={zonesLoading} error={zonesError?.message} selectedArea={plan.area} onAreaChange={changeArea} aircraft={traffic.data?.nearby} heliports={heliports} />
         <aside className="flight-side">
@@ -521,7 +527,7 @@ function PlannerPage() {
             <div className="form-grid flight-dates"><Field label="Data" name="flight-date" type="date" value={plan.date} onChange={(date) => changePlan({ ...plan, date })} /><Field label="Ora locală" name="flight-time" type="time" value={plan.time} onChange={(time) => changePlan({ ...plan, time })} /></div>
             <div className="selection-summary">
               <span className="section-eyebrow">ZONA SELECTATĂ</span>
-              {plan.area ? <><strong>{plan.area.north.toFixed(5)}° N · {plan.area.east.toFixed(5)}° E</strong><small>{selection?.matches.length ? `${selection.matches.length} suprapuneri în stratul ROMATSA` : zones ? "Nicio suprapunere în stratul ROMATSA" : "Așteaptă încărcarea datelor"}</small></> : <p>Desenează un dreptunghi pe hartă ca să verifici zona.</p>}
+              {plan.area ? <><strong>{plan.area.north.toFixed(5)}° N · {plan.area.east.toFixed(5)}° E</strong><small>{selection?.matches.length ? `${selection.matches.length} suprapuneri în stratul demonstrativ` : zones ? "Nicio suprapunere găsită în stratul demonstrativ" : "Așteaptă încărcarea datelor"}</small></> : <p>Desenează un dreptunghi pe hartă ca să verifici zona.</p>}
             </div>
             <button className="button button-primary button-wide" disabled={!plan.area || !weatherAllowsPlanning || !checklistComplete || !checksAllowPlanning || submitDemoRequest.isPending} onClick={() => {
               if (!plan.area) return;
@@ -529,17 +535,18 @@ function PlannerPage() {
                 area: plan.area,
                 date: plan.date,
                 time: plan.time,
-                droneId: plan.droneId || drones[0].id
+                droneId: plan.droneId || drones[0].id,
+                requestType: "flight"
               });
-            }}>{submitDemoRequest.isPending ? "Se trimite cererea demo…" : "Trimite cererea de zbor · DEMO"} <span>→</span></button>
-            <button className="button button-quiet button-wide" disabled={!plan.area || !weatherAllowsPlanning || !checklistComplete || !checksAllowPlanning} onClick={() => navigate({ to: "/aerofoto" })}>Pregătește draftul AEROFOTO ↗</button>
+            }}>{submitDemoRequest.isPending ? "Se înregistrează cererea…" : "Cere aprobarea demo în Aripi"} <span>→</span></button>
+            <button className="button button-quiet button-wide" disabled={!plan.area || !weatherAllowsPlanning || !checklistComplete || !checksAllowPlanning} onClick={() => navigate({ to: "/aerofoto" })}>Cerere demo pentru activitate foto ↗</button>
             {submitDemoRequest.error && <p className="request-error" role="alert">Cererea demo nu a putut fi înregistrată: {submitDemoRequest.error.message}</p>}
             {flightRequestsError && <p className="request-error" role="alert">Nu am putut încărca statusurile: {flightRequestsError.message}</p>}
             {flightRequests.slice(0, 3).map((request) => <div className="demo-approval-card" key={request.id}>
-              <span className="demo-approval-tag">SIMULARE · FĂRĂ VALOARE OFICIALĂ</span>
-              <strong>APROBATĂ ÎN ARIPI · DEMO</strong>
+                <span className="demo-approval-tag">STATUS GENERAT ÎN APLICAȚIE</span>
+                <strong>{request.request.requestType === "photo" ? "CERERE FOTO" : "CERERE ZBOR"} · APROBATĂ DEMO</strong>
               <span>{request.request.droneModel} · {request.request.date} · {request.request.time}</span>
-              <p>Status demonstrativ al platformei Aripi. Nu este aviz emis de ROMATSA, CAA sau MApN și nu înlocuiește aprobările oficiale.</p>
+                <p>Cererea și statusul sunt salvate doar în Aripi. Nu s-a transmis nimic către servicii externe.</p>
             </div>)}
           </section>
           <section className="surface-card weather-card" aria-live="polite">
@@ -586,18 +593,18 @@ function PlannerPage() {
               </>}
             </section>}
             {plan.area && heliportsLoading && <p className="heliport-status">Se verifică heliporturile OpenStreetMap din apropiere…</p>}
-            {plan.area && heliportsError && <p className="heliport-status">Verificarea OpenStreetMap nu este disponibilă acum; datele despre heliporturi sunt necunoscute. Verifică sursele oficiale.</p>}
+            {plan.area && heliportsError && <p className="heliport-status">Verificarea OpenStreetMap nu este disponibilă acum; datele despre heliporturi sunt necunoscute.</p>}
             {emergencyArea && <div className="traffic-notice" role="alert">
               <strong>{isCtr ? "CTR detectat · ATC și procedura de urgență" : "Heliport / landing site în apropierea zonei"}</strong>
               <p>{isCtr && "În CTR există șanse să fii contactat(ă), inclusiv telefonic, dacă traficul se schimbă sau intervine o aeronavă de urgență. Obține confirmarea directă de la ATC. "}Dacă intervine un elicopter SMURD sau altă aeronavă de urgență, coboară și aterizează cât mai repede într-un loc sigur, fără a pune persoane în pericol, și urmează instrucțiunile ATC / serviciilor de urgență.{hasNearbyHeliport && ` OpenStreetMap indică: ${heliports.map((place) => `${place.name} (${place.distanceKm} km)`).join(", ")}.`}</p>
               {hasNearbyHeliport && <small>Raza de alertă Aripi: {heliportData?.radiusKm} km față de zona desenată; indicator orientativ, nu limită legală.</small>}
             </div>}
-            {plan.area && heliportData && <p className="heliport-attribution">Heliporturi: <a href={heliportData.sourceUrl} target="_blank" rel="noreferrer">OpenStreetMap</a>. Datele pot fi incomplete; verifică sursele oficiale.</p>}
+            {plan.area && heliportData && <p className="heliport-attribution">Datele despre heliporturi provin din <a href={heliportData.sourceUrl} target="_blank" rel="noreferrer">OpenStreetMap</a> și pot fi incomplete.</p>}
             {checklistItems.map((item) => <label className="checklist-item" key={item.id}><input type="checkbox" checked={checkedItems.includes(item.id)} onChange={(event) => setCheckedItems((current) => event.target.checked ? [...current, item.id] : current.filter((id) => id !== item.id))} /><span>{item.label}</span></label>)}
             {(!weather.data?.recommendFlight || weather.isError) && <p className="checklist-blocker">{weather.data?.stopFlight ? "Noaptea și ceața sunt condiții de oprire: nu decola." : "Plannerul rămâne blocat până când prognoza pentru intervalul selectat este disponibilă și nu indică vreme nefavorabilă."}</p>}
             {!checklistComplete && <p className="checklist-hint">Bifează toate verificările obligatorii pentru a continua.</p>}
           </section>
-          <section className="safety-card"><span>ⓘ</span><div><strong>Verificare orientativă</strong><p>Acest strat ROMATSA este un instantaneu. Nu include NOTAM-uri curente și nu reprezintă o autorizare de zbor.</p><a href="https://flightplan.romatsa.ro/init/drones/index" target="_blank" rel="noreferrer">Verifică ROMATSA și NOTAM ↗</a></div></section>
+          <section className="safety-card"><span>ⓘ</span><div><strong>Mod demonstrativ Aripi</strong><p>Cererile și statusurile sunt gestionate doar în aplicație. Stratul aerian este static, iar vremea, traficul și punctele de interes sunt date informative; niciun rezultat nu reprezintă o autorizare reală.</p></div></section>
         </aside>
       </div>
     </div>
@@ -605,85 +612,74 @@ function PlannerPage() {
 }
 
 function AerofotoPage() {
-  const user = trpc.auth.me.useQuery().data;
-  const { data: drones = [] } = trpc.drones.list.useQuery();
+  const { data: drones = [], isLoading: dronesLoading } = trpc.drones.list.useQuery();
+  const { data: requests = [], error: requestsError } = trpc.flightRequests.mine.useQuery();
   const plan = readFlightPlan();
-  const [submitted, setSubmitted] = useState(false);
   const [selectedDroneId, setSelectedDroneId] = useState(plan.droneId || drones[0]?.id || "");
+  const [requestResult, setRequestResult] = useState<{ id: string; notice: string } | null>(null);
+  const [requestError, setRequestError] = useState("");
+  const utils = trpc.useUtils();
+  const submitRequest = trpc.flightRequests.submitDemo.useMutation({
+    onSuccess: async (result) => {
+      setRequestResult({ id: result.id, notice: result.notice });
+      setRequestError("");
+      await utils.flightRequests.mine.invalidate();
+    },
+    onError: (error) => setRequestError(error.message)
+  });
   useEffect(() => {
     if (!selectedDroneId && drones.length) setSelectedDroneId(plan.droneId || drones[0].id);
   }, [selectedDroneId, drones, plan.droneId]);
   const selectedDrone = drones.find((drone) => drone.id === selectedDroneId);
   const area = plan.area;
-  const coords = area ? [
-    [area.west, area.south], [area.east, area.south], [area.east, area.north],
-    [area.west, area.north], [area.west, area.south]
-  ] : null;
-  const generateDraft = (event: React.FormEvent<HTMLFormElement>) => {
+  const submitPhotoRequest = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+    if (!area) {
+      setRequestError("Desenează mai întâi zona pe harta Aripi.");
+      return;
+    }
+    if (!selectedDrone) {
+      setRequestError("Adaugă și selectează o dronă înainte de a trimite cererea demo.");
+      return;
+    }
     const formData = new FormData(event.currentTarget);
-    const request = {
-      document: "Cerere pregătită pentru depunere AEROFOTO MApN",
-      generatedAt: new Date().toISOString(),
-      status: "DRAFT_NOT_SUBMITTED",
-      applicant: {
-        name: String(formData.get("name")).trim(),
-        email: String(formData.get("email")).trim(),
-        phone: String(formData.get("phone")).trim(),
-        address: String(formData.get("address")).trim()
-      },
-      aircraft: selectedDrone ? {
-        model: selectedDrone.model,
-        manufacturer: selectedDrone.manufacturer,
-        weightGrams: selectedDrone.weightGrams,
-        category: categoryLabels[selectedDrone.category],
-        uasClass: selectedDrone.uasClass,
-        serial: selectedDrone.serial,
-        operatorId: selectedDrone.operatorId,
-        camera: selectedDrone.camera
-      } : null,
-      activity: {
-        date: String(formData.get("date")),
-        localTime: String(formData.get("time")).trim(),
-        location: String(formData.get("location")).trim(),
-        purpose: String(formData.get("purpose")).trim(),
-        notes: String(formData.get("notes") || "").trim(),
-        selectedRectangleWgs84: coords
-      },
-      notice: "Acesta este un draft pregătit în aplicația Aripi, nu o cerere depusă, un aviz MApN sau o autorizare de zbor. Depune prin portalul oficial AEROFOTO."
-    };
-    const link = document.createElement("a");
-    const url = URL.createObjectURL(new Blob([JSON.stringify(request, null, 2)], { type: "application/json" }));
-    link.href = url;
-    link.download = `aripi-cerere-aerofoto-${request.activity.date || today()}.json`;
-    link.click();
-    window.setTimeout(() => URL.revokeObjectURL(url), 1000);
-    setSubmitted(true);
+    submitRequest.mutate({
+      requestType: "photo",
+      area,
+      date: String(formData.get("date")),
+      time: String(formData.get("time")),
+      droneId: selectedDrone.id,
+      location: String(formData.get("location")),
+      purpose: String(formData.get("purpose")),
+      notes: String(formData.get("notes") || "")
+    });
   };
   return (
     <div className="page-content">
-      <section className="page-intro"><span className="eyebrow">DOCUMENTE PENTRU ACTIVITATE</span><h1>Cerere foto / MApN</h1><p>Pregătește un draft cu datele dronei și ale zonei selectate. Depunerea se face separat, pe portalul oficial.</p></section>
-      {submitted && <div className="success-banner" role="status">Draftul JSON a fost generat. Verifică cerințele și depune cererea prin portalul AEROFOTO.</div>}
+      <section className="page-intro"><span className="eyebrow">CERERI ÎN ARIPI · MOD DEMO</span><h1>Cerere pentru activitate foto</h1><p>Completează formularul, trimite cererea în aplicație și urmărește statusul aici. Nimic nu este transmis către platforme sau autorități externe.</p></section>
+      <div className="demo-mode-banner"><strong>MOD DEMONSTRATIV</strong><span>Aripi înregistrează cererea și generează un status demonstrativ. Nu există depunere sau aprobare oficială.</span></div>
+      {requestResult && <div className="demo-approval-card" role="status"><span className="demo-approval-tag">CERERE ÎNREGISTRATĂ ÎN ARIPI</span><strong>APROBATĂ · DEMO</strong><span>Referință: {requestResult.id.slice(0, 8).toUpperCase()}</span><p>{requestResult.notice} Cererea este salvată în contul tău.</p></div>}
       <div className="aerofoto-layout">
-        <form className="surface-card aerofoto-form" onSubmit={generateDraft}>
-          <div className="form-section-title"><span>01</span><div><strong>Date solicitant</strong><small>Informații despre persoana care solicită avizul</small></div></div>
-          <div className="form-grid"><Field label="Nume și prenume" name="name" required defaultValue={user?.name} /><Field label="E-mail" name="email" type="email" required defaultValue={user?.email} /><Field label="Telefon" name="phone" type="tel" required /><Field label="Adresă" name="address" required /></div>
-          <div className="form-section-title camera-section-title"><span>02</span><div><strong>Detalii activitate</strong><small>Echipamentul și aria selectate</small></div></div>
+        <form className="surface-card aerofoto-form" onSubmit={submitPhotoRequest}>
+          <div className="form-section-title"><span>01</span><div><strong>Planul activității</strong><small>Datele cererii rămân în contul tău Aripi</small></div></div>
           <label className="field"><span>Dronă *</span><select required value={selectedDroneId} onChange={(event) => setSelectedDroneId(event.target.value)}><option value="">Selectează drona</option>{drones.map((drone) => <option value={drone.id} key={drone.id}>{drone.manufacturer ? `${drone.manufacturer} ${drone.model}` : drone.model}</option>)}</select></label>
           <div className="form-grid"><Field label="Data propusă" name="date" type="date" required defaultValue={plan.date || today()} /><Field label="Interval orar" name="time" placeholder="Ex. 10:00–12:00" required defaultValue={plan.time} /></div>
           <Field label="Localitate / adresă zonă" name="location" required />
           <label className="field"><span>Scopul filmării / fotografierii / cartografierii *</span><textarea name="purpose" rows={3} required placeholder="Descrie pe scurt activitatea planificată" /></label>
           <label className="field"><span>Informații suplimentare</span><textarea name="notes" rows={3} placeholder="Detalii utile pentru solicitare" /></label>
-          <label className="checkbox-field"><input type="checkbox" required /><span>Confirm că informațiile sunt corecte și înțeleg că acest draft nu reprezintă depunerea sau aprobarea cererii.</span></label>
-          <button type="submit" className="button button-primary button-wide">Descarcă draftul JSON ↓</button>
-          <p className="form-footnote">Nu trimitem datele tale către MApN.</p>
+          <label className="checkbox-field"><input type="checkbox" required /><span>Înțeleg că trimit cererea doar în Aripi și că statusul primit este demonstrativ, fără valoare oficială.</span></label>
+          {requestError && <p className="form-error" role="alert">Cererea nu a putut fi salvată: {requestError}</p>}
+          {requestsError && <p className="form-error" role="alert">Nu am putut încărca cererile anterioare: {requestsError.message}</p>}
+          <button type="submit" className="button button-primary button-wide" disabled={!area || !selectedDrone || submitRequest.isPending}>{submitRequest.isPending ? "Se înregistrează în Aripi…" : "Trimite cererea demo"} <span>→</span></button>
+          {!area && <p className="form-footnote">Desenează zona dorită în planner; apoi revino aici pentru a trimite cererea.</p>}
         </form>
         <aside className="aerofoto-aside">
-          <section className="surface-card request-summary"><span className="section-eyebrow">REZUMATUL CERERII</span><h2>{selectedDrone ? selectedDrone.model : "Alege drona"}</h2><p>{selectedDrone ? `${categoryLabels[selectedDrone.category]} · ${selectedDrone.weightGrams} g` : "Selectează echipamentul înainte de pregătire."}</p>
+          <section className="surface-card request-summary"><span className="section-eyebrow">CEREREA TA</span><h2>{selectedDrone ? selectedDrone.model : "Alege drona"}</h2><p>{selectedDrone ? `${categoryLabels[selectedDrone.category]} · ${selectedDrone.weightGrams} g` : dronesLoading ? "Se încarcă flota…" : "Selectează echipamentul înainte de trimitere."}</p>
             <div className="summary-box"><strong>Zona selectată pe hartă</strong>{area ? <p>Nord {area.north.toFixed(5)} · Est {area.east.toFixed(5)}<br />Sud {area.south.toFixed(5)} · Vest {area.west.toFixed(5)}</p> : <p>Nu ai selectat încă o zonă.</p>}</div>
             {selectedDrone?.camera.model && <div className="summary-box"><strong>Cameră</strong><p>{selectedDrone.camera.model}{selectedDrone.camera.resolution ? ` · ${selectedDrone.camera.resolution}` : ""}</p></div>}
           </section>
-          <section className="safety-card"><span>ⓘ</span><div><strong>Ce urmează</strong><p>Verifică documentele necesare și depune solicitarea prin portalul AEROFOTO.</p><a href="https://aerofoto.mapn.ro/" target="_blank" rel="noreferrer">Deschide AEROFOTO MApN ↗</a></div></section>
+          <section className="surface-card request-summary"><span className="section-eyebrow">ISTORICUL CERERILOR</span>{requests.length ? requests.map((request) => <div className="request-history-item" key={request.id}><strong>{request.request.requestType === "photo" ? "Activitate foto" : "Plan de zbor"} · APROBATĂ DEMO</strong><span>{request.request.droneModel} · {request.request.date} · {request.request.time}</span><small>{request.request.location || `${request.request.area.south.toFixed(3)}, ${request.request.area.west.toFixed(3)}`}</small></div>) : <p className="muted">Cererile trimise în Aripi vor apărea aici.</p>}</section>
+          <Link className="button button-quiet button-wide" to="/planner">← Înapoi la planificarea zborului</Link>
         </aside>
       </div>
     </div>

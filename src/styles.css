@@ -541,6 +541,7 @@ body { color: var(--app-text); background: var(--app-bg); }
 .academy-option.option-selected { border-color: #516eb4; color: var(--app-text); background: var(--app-accent-soft); }
 .academy-submit { min-width: 190px; }
 .academy-disclaimer { margin: 11px 0 0; color: var(--app-soft); font-size: 9px; line-height: 1.6; text-align: center; }
+.academy-save-status { margin: 8px 0; color: var(--app-muted); font-size: 10px; }
 .exam-result { display: flex; align-items: center; flex-wrap: wrap; gap: 9px 14px; margin: 12px 0; border: 1px solid var(--app-line); border-radius: 11px; padding: 11px 13px; font-size: 10px; }
 .exam-result strong { color: var(--app-text); }
 .exam-result > span { color: var(--app-muted); }
@@ -618,6 +619,13 @@ body { color: var(--app-text); background: var(--app-bg); }
 .traffic-notice small { display: block; margin-top: 6px; color: var(--app-soft); font-size: 8px; line-height: 1.5; }
 .heliport-status, .heliport-attribution { margin: 8px 0; color: var(--app-muted); font-size: 8px; line-height: 1.55; }
 .heliport-attribution a { color: #93adff; }
+.demo-mode-banner { display: flex; align-items: center; gap: 10px; margin: 0 0 14px; border: 1px solid #6f5c2e; border-radius: 12px; padding: 12px 14px; color: #ffdfa0; background: #2b2416; }
+.demo-mode-banner strong { flex: 0 0 auto; font-size: 9px; letter-spacing: .8px; }
+.demo-mode-banner span { color: #d3c4a4; font-size: 10px; line-height: 1.55; }
+.request-history-item { display: grid; gap: 5px; margin-top: 11px; border-top: 1px solid var(--app-line); padding-top: 11px; }
+.request-history-item strong { color: var(--app-text); font-size: 10px; }
+.request-history-item span, .request-history-item small { color: var(--app-muted); font-size: 9px; line-height: 1.5; }
+.map-source-note { color: var(--app-soft); font-size: 8px; }
 .request-error { margin: 8px 0; color: #ffb59f; font-size: 9px; line-height: 1.55; }
 .demo-approval-card { display: grid; gap: 5px; margin-top: 10px; border: 1px solid #a87b37; border-radius: 11px; padding: 11px; background: linear-gradient(145deg, #302512, #1d1b17); }
 .demo-approval-tag { color: #ffd889; font-size: 7px; font-weight: 800; letter-spacing: .8px; }
@@ -631,6 +639,10 @@ body { color: var(--app-text); background: var(--app-bg); }
 .app-shell[data-theme="light"] .weather-verdict.weather-no { border-color: #f0d4ca; background: #fff5f1; }
 .app-shell[data-theme="light"] .traffic-notice { border-color: #f0d4ca; background: #fff5f1; }
 .app-shell[data-theme="light"] .traffic-notice strong { color: #9c4c30; }
+.app-shell[data-theme="light"] .demo-mode-banner { border-color: #ebd29c; background: #fff8e9; }
+.app-shell[data-theme="light"] .demo-mode-banner strong { color: #805c16; }
+.app-shell[data-theme="light"] .demo-mode-banner span { color: #725d36; }
+.app-shell[data-theme="light"] .request-history-item { border-color: var(--app-line); }
 .app-shell[data-theme="light"] .demo-approval-card { border-color: #ebd29c; background: #fff8e9; }
 .app-shell[data-theme="light"] .demo-approval-tag, .app-shell[data-theme="light"] .demo-approval-card > strong { color: #805c16; }
 .app-shell[data-theme="light"] .demo-approval-card p { color: #8d5030; }
@@ -638,4 +650,5 @@ body { color: var(--app-text); background: var(--app-bg); }
   .weather-card, .preflight-card { padding: 14px; }
   .weather-metrics { gap: 6px; }
   .traffic-panel { padding: 10px; }
+  .demo-mode-banner { align-items: flex-start; flex-direction: column; gap: 5px; }
 }

@@ -69,8 +69,8 @@ export function FlightMap({ zones, loading, error, selectedArea, onAreaChange, a
           "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;"
         })[character]!);
         const kind = zoneKind(feature as never);
-        const labels = { ctr: "CTR / contact cu TWR", mapn: "Aviz foto MApN", restricted: "Zonă UAS restricționată" };
-        layer.bindPopup(`<strong>${safe(properties.zone_id || "Zonă UAS")}</strong><br/>${labels[kind]}<br/>${safe(properties.lower_lim)} – ${safe(properties.upper_lim)}<br/><small>Verifică sursele oficiale. Harta nu este o autorizare.</small>`);
+        const labels = { ctr: "CTR · atenționare Aripi", mapn: "Zonă foto · strat demonstrativ Aripi", restricted: "Zonă UAS · strat demonstrativ Aripi" };
+        layer.bindPopup(`<strong>${safe(properties.zone_id || "Zonă UAS")}</strong><br/>${labels[kind]}<br/>${safe(properties.lower_lim)} – ${safe(properties.upper_lim)}<br/><small>Indicator demonstrativ. Nu reprezintă o autorizare.</small>`);
       }
     }).addTo(map);
     return () => { zoneLayer.remove(); };
@@ -239,7 +239,7 @@ export function FlightMap({ zones, loading, error, selectedArea, onAreaChange, a
     <section className="map-card">
       <div className="map-toolbar">
         <div>
-          <strong>Planifică pe hartă</strong>
+          <strong>Planifică în Aripi · demo</strong>
           <span>Hărți OpenStreetMap · fără cheie API</span>
         </div>
         <div className="map-actions">
@@ -251,12 +251,12 @@ export function FlightMap({ zones, loading, error, selectedArea, onAreaChange, a
       </div>
       <div className={`map-canvas ${drawing ? "map-drawing" : ""}`} ref={containerRef} onPointerDown={pointerDown} onPointerMove={pointerMove} onPointerUp={pointerUp} onPointerCancel={pointerUp} aria-label="Hartă de planificare a zborului" />
       <div className="map-footer">
-        <div className="map-legend"><span><i className="legend-ctr" /> CTR / TWR</span><span><i className="legend-mapn" /> Foto MApN</span><span><i className="legend-restricted" /> Restricții UAS</span></div>
-        <a href="https://flightplan.romatsa.ro/init/drones/index" target="_blank" rel="noreferrer">Sursa oficială ROMATSA ↗</a>
+        <div className="map-legend"><span><i className="legend-ctr" /> CTR</span><span><i className="legend-mapn" /> Foto / cartografiere</span><span><i className="legend-restricted" /> Zone de atenție</span></div>
+        <span className="map-source-note">Strat demonstrativ Aripi</span>
       </div>
       {(loading || error || locationMessage) && (
         <div className={error ? "map-status map-error" : "map-status"} role="status">
-          {loading ? "Se încarcă zonele ROMATSA…" : error || locationMessage}
+          {loading ? "Se încarcă stratul demonstrativ…" : error || locationMessage}
         </div>
       )}
       {analysis && (
@@ -266,8 +266,8 @@ export function FlightMap({ zones, loading, error, selectedArea, onAreaChange, a
             <div>
               <strong>{analysis.matches.length ? `DA · ${analysis.matches.length} ${analysis.matches.length === 1 ? "zonă intersectată" : "zone intersectate"}` : "NU · Nicio suprapunere găsită în acest strat"}</strong>
               <p>{analysis.matches.length
-                ? "Nu decola înainte să verifici condițiile și aprobările necesare."
-                : "Asta nu confirmă permisiunea de zbor și nu include NOTAM-uri curente."}</p>
+                ? "Planul are atenționări în stratul demonstrativ Aripi."
+                : "Nu au fost găsite atenționări în stratul demonstrativ."}</p>
             </div>
             <button type="button" className="button button-quiet" onClick={clearArea}>Șterge selecția</button>
           </div>
@@ -275,14 +275,14 @@ export function FlightMap({ zones, loading, error, selectedArea, onAreaChange, a
             <ul className="zone-list">
               {analysis.matches.slice(0, 6).map((zone, index) => (
                 <li key={`${zone.properties.zone_id}-${index}`}>
-                  <span>{zoneKind(zone) === "mapn" ? "Foto MApN · " : ""}{zone.properties.zone_id}</span>
+                  <span>{zoneKind(zone) === "mapn" ? "Foto / cartografiere · " : ""}{zone.properties.zone_id}</span>
                   <small>{zone.properties.lower_lim || "?"} – {zone.properties.upper_lim || "?"}</small>
                 </li>
               ))}
               {analysis.matches.length > 6 && <li className="more-zones">și încă {analysis.matches.length - 6} zone</li>}
             </ul>
           )}
-          <p className="map-disclaimer">Date ROMATSA statice · consultă NOTAM și autoritățile. Aripi nu emite aprobări.</p>
+          <p className="map-disclaimer">Date statice de demonstrație. Aprobările afișate sunt generate doar în Aripi.</p>
         </section>
       )}
     </section>
